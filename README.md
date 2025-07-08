@@ -97,7 +97,7 @@ git checkout -b feature/your-feature-name
 git commit -m "Add your descriptive message"
 ```
 
-#### 6. Push to your fork and submit a Pull Request
+#### 6. Push to your fork and submit a Pull Request 
 
 ## Contribution Tips
 - Follow PEP8 and naming conventions
