@@ -25,6 +25,4 @@ def github_webhook():
     if not hmac.compare_digest(mac.hexdigest(), signature):
         abort(401, "Invalid signature.")
 
-    # Do your deployment work here
-    subprocess.Popen(["/home/kade/StonewallNexus/deploy_hook.py"])
     return "Success", 200
