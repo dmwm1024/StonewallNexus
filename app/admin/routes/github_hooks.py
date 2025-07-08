@@ -6,37 +6,42 @@ import subprocess
 from app.admin import admin
 import os
 
+LOGFILE = "/tmp/github_webhook.log"  # you can view this later
 GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
+
+def log(message):
+    with open(LOGFILE, "a") as f:
+        f.write(message + "\n")
 
 @admin.route('/github-webhook', methods=['POST'])
 def github_webhook():
-    print("🔔 Webhook route hit!")
+    log("🔔 Webhook hit!")
 
     signature = request.headers.get("X-Hub-Signature-256")
-    if signature is None:
-        print("❌ No signature received.")
-        abort(401, "Missing signature")
+    if not signature:
+        log("❌ Missing signature header.")
+        abort(401)
 
     try:
         sha_name, signature_hash = signature.split("=")
         if sha_name != "sha256":
-            print(f"❌ Unsupported signature method: {sha_name}")
-            abort(401, "Unsupported signature")
+            log(f"❌ Unsupported signature method: {sha_name}")
+            abort(401)
     except Exception as e:
-        print(f"❌ Malformed signature: {signature} | Error: {e}")
-        abort(401, "Malformed signature")
+        log(f"❌ Malformed signature header: {signature} | Error: {e}")
+        abort(401)
 
     computed_hash = hmac.new(GITHUB_SECRET, msg=request.data, digestmod=hashlib.sha256).hexdigest()
-
-    print("🔐 Received signature:", signature_hash)
-    print("🔐 Computed hash:     ", computed_hash)
+    log(f"🔐 Received signature: {signature_hash}")
+    log(f"🔐 Computed hash:     {computed_hash}")
 
     if not hmac.compare_digest(computed_hash, signature_hash):
-        print("❌ Signature mismatch!")
-        abort(401, "Invalid signature")
+        log("❌ Signature mismatch!")
+        abort(401)
 
-    print("✅ Signature validated. Pulling code...")
-    os.system("cd /home/kade/StonewallNexus && git pull")
+    log("✅ Signature valid. Pulling latest code...")
+    os.system("cd /home/kade/StonewallNexus && git pull >> /tmp/github_webhook.log 2>&1")
     os.system("touch /var/www/kade_pythonanywhere_com_wsgi.py")
 
-    return "Webhook received", 200
+    log("✅ Deployment complete.")
+    return "OK", 200
