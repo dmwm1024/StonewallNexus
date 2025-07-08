@@ -71,6 +71,7 @@ python scripts/seed.py
 ```
 
 ### 7. Run the Development Server
+It should run with --debug automatically when ran locally, but just incase.
 ```bash
 flask run --debug
 ```
