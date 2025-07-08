@@ -67,7 +67,7 @@ flask db upgrade
 ### 6. (Optional) Load Seed Data
 This will create testing accounts.
 ```bash
-python seed.py
+python scripts/seed.py
 ```
 
 ### 7. Run the Development Server
