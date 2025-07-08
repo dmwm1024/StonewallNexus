@@ -105,6 +105,7 @@ git commit -m "Add your descriptive message"
 - Use UTC-aware datetime fields and clean SQLAlchemy models
   - Include the AuditMixin in all models.
 - Ask questions!
+- Dev Demo: https://kade.pythonanywhere.com/
 
 ## 🧠 Maintainers & Contact
 This project is maintained by volunteers of Stonewall Sports.
