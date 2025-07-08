@@ -26,4 +26,5 @@ def github_webhook():
         abort(401, "Invalid signature.")
 
     # Do your deployment work here
+    subprocess.Popen(["/home/kade/StonewallNexus/deploy_hook.py"])
     return "Success", 200
