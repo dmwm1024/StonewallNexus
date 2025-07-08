@@ -4,11 +4,9 @@ import hmac
 import hashlib
 import subprocess
 from app.admin import admin
-import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL')
+GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
 
 @admin.route('/github-webhook', methods=['POST'])
 def github_webhook():
