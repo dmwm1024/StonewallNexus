@@ -1,0 +1,155 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<style>
+  .sidebar {
+    min-height: 100vh;
+    border-right: 1px solid #dee2e6;
+    padding-top: 1rem;
+  }
+  .sidebar a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+  .sidebar a.active {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  .sidebar a:hover {
+    background-color: #e9ecef;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Main Content -->
+    <main class="col-md-10 py-4">
+      <div class="container-fluid">
+        <h1 class="mb-4">Admin Dashboard</h1>
+        <p class="lead text-muted">Welcome, {{ current_user.username }}. Here's an overview of the platform.</p>
+
+        <!-- Summary Cards -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-3">
+            <div class="card text-white bg-primary">
+              <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-6">{{ users|length }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-success">
+              <div class="card-body">
+                <h5 class="card-title">Chapters</h5>
+                <p class="card-text display-6">{{ chapters|length }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-warning">
+              <div class="card-body">
+                <h5 class="card-title">Programs</h5>
+                <p class="card-text display-6">42</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-info">
+              <div class="card-body">
+                <h5 class="card-title">Registrations</h5>
+                <p class="card-text display-6">2945</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Tables -->
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Recent Users</h4>
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alice Smith</td>
+                  <td>alice@example.com</td>
+                  <td>Program Admin</td>
+                  <td>2025-06-28</td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td>john@example.com</td>
+                  <td>User</td>
+                  <td>2025-06-29</td>
+                </tr>
+                <tr>
+                  <td>Max Jones</td>
+                  <td>max@example.com</td>
+                  <td>Site Admin</td>
+                  <td>2025-07-01</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="{{  url_for("admin.list_users") }}" class="btn btn-sm btn-outline-primary">View All Users</a>
+          </div>
+
+          <div class="col-md-6">
+            <h4>Recent Programs</h4>
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Program</th>
+                  <th>Site</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Spring Kickball</td>
+                  <td>Jacksonville</td>
+                  <td><span class="badge bg-success">Open</span></td>
+                  <td>2025-06-20</td>
+                </tr>
+                <tr>
+                  <td>Summer Volleyball</td>
+                  <td>Orlando</td>
+                  <td><span class="badge bg-warning">Draft</span></td>
+                  <td>2025-06-22</td>
+                </tr>
+                <tr>
+                  <td>Fall Dodgeball</td>
+                  <td>Miami</td>
+                  <td><span class="badge bg-secondary">Closed</span></td>
+                  <td>2025-06-15</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="#" class="btn btn-sm btn-outline-primary">View All Programs</a>
+          </div>
+        </div>
+
+        <!-- Optional Chart/Analytics Section -->
+        <div class="mt-5">
+          <h4>Participation Trends (Coming Soon)</h4>
+          <p class="text-muted">Charts and data visualizations will be shown here.</p>
+          <div class="border border-dashed p-4 text-center text-muted">
+            <em>Analytics dashboard under construction...</em>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1>{{ site.name }}</h1>
+  <p class="text-muted">{{ site.city }}, {{ site.state }}</p>
+
+  {% if site.logoUrl %}
+    <img src="{{ site.logoUrl }}" alt="Logo for {{ site.name }}" class="img-fluid my-3" style="max-height: 150px;">
+  {% endif %}
+
+  {% if site.url %}
+    <p><strong>Website:</strong> <a href="{{ site.url }}" target="_blank">{{ site.url }}</a></p>
+  {% endif %}
+
+  {% if site.theme %}
+    <p><strong>Theme Colors:</strong> {{ site.theme.colors | tojson }}</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Edit User</h1>
+
+    <form method="POST" action="{{ url_for('admin.edit_user', user_id=user.id) }}">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" value="{{ user.username }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Leave blank to keep current password">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Role</label>
+                <select name="role" class="form-select">
+                    <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+                    <option value="program_admin" {% if user.role == 'program_admin' %}selected{% endif %}>Program Admin</option>
+                    <option value="site_admin" {% if user.role == 'site_admin' %}selected{% endif %}>Site Admin</option>
+                    <option value="root" {% if user.role == 'root' %}selected{% endif %}>Root</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Assign Chapters</label>
+                <select id="chapterSelect" name="chapters" class="form-select" multiple>
+                    {% for chapter in chapters %}
+                        <option value="{{ chapter.id }}" {% if chapter.id in user_chapter_ids %}selected{% endif %}>
+                            {{ chapter.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Assign Programs</label>
+                <select id="programSelect" name="programs" class="form-select" multiple>
+                    <!-- Populated by JS below -->
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{{ url_for('admin.list_users') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    const chapterPrograms = {
+        {% for chapter in chapters %}
+            "{{ chapter.id }}": [
+                {% for program in chapter.programs %}
+                    {
+                        id: {{ program.id }},
+                        name: "{{ program.name }}",
+                        season: "{{ program.season_name | default('') }}"
+                    },
+                {% endfor %}
+            ],
+        {% endfor %}
+    };
+
+    const chapterSelect = document.getElementById("chapterSelect");
+    const programSelect = document.getElementById("programSelect");
+    const userProgramIds = {{ user_program_ids | tojson }};
+
+    function updateProgramOptions() {
+        const selectedChapters = Array.from(chapterSelect.selectedOptions).map(opt => opt.value);
+        const seen = new Set();
+        const matchedPrograms = [];
+
+        selectedChapters.forEach(chapterId => {
+            (chapterPrograms[chapterId] || []).forEach(program => {
+                if (!seen.has(program.id)) {
+                    seen.add(program.id);
+                    matchedPrograms.push(program);
+                }
+            });
+        });
+
+        programSelect.innerHTML = '';
+
+        matchedPrograms.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = `${p.name} – ${p.season}`;
+            if (userProgramIds.includes(p.id)) {
+                opt.selected = true;
+            }
+            programSelect.appendChild(opt);
+        });
+    }
+
+    chapterSelect.addEventListener("change", updateProgramOptions);
+
+    // Trigger update on page load
+    window.addEventListener("DOMContentLoaded", updateProgramOptions);
+</script>
+{% endblock %}

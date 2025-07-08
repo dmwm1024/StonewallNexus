@@ -1,0 +1,32 @@
+{% extends "admin_base.html" %}
+{% block content %}
+    <div class="container py-4">
+        <h2>{{ action }} Chapter</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Chapter Name</label>
+                <input type="text" name="name" class="form-control" required
+                       value="{{ chapter.name if chapter is defined else '' }}">
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" name="city" class="form-control"
+                       value="{{ chapter.city if chapter is defined else '' }}">
+            </div>
+            <div class="mb-3">
+                <label for="state" class="form-label">State</label>
+                <input type="text" name="state" class="form-control" maxlength="2"
+                       value="{{ chapter.state if chapter is defined else '' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status">
+                    <option value="Active" {% if chapter is defined and chapter.status == "Active" %}selected{% endif %}>Active</option>
+                    <option value="Inactive" {% if chapter is defined and chapter.status == "Inactive" %}selected{% endif %}>Inactive</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ action }}</button>
+            <a href="{{ url_for('admin.list_chapters') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

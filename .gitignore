@@ -1,0 +1,9 @@
+.env
+stonewallsync.db
+__pycache__/
+*.pyc
+instance/
+migrations/
+.venv
+.idea
+*.db

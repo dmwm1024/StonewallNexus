@@ -1,0 +1,217 @@
+{% extends "admin_base.html" %}
+{% block content %}
+    <div class="container py-4">
+        <h1 class="mb-4">Manage Users</h1>
+
+        <!-- Search & Filter -->
+        <form class="row g-3 mb-3">
+            <div class="col-md-6">
+                <input onkeyup="filterUsers()" id="inputNameEmail" type="text" class="form-control"
+                       placeholder="Search by name or email...">
+            </div>
+            <div class="col-md-4">
+                <select id="roleFilter" class="form-select" onchange="filterUsers()">
+                    <option value="">Filter by Role</option>
+                    <option value="Root">Root</option>
+                    <option value="Site Admin">Site Admin</option>
+                    <option value="Program Admin">Program Admin</option>
+                    <option value="User">User</option>
+                </select>
+            </div>
+            <div class="col-md-2 text-end">
+                <button type="button" class="btn btn-success w-100" data-bs-toggle="modal"
+                        data-bs-target="#createUserModal">
+                    + Add User
+                </button>
+            </div>
+        </form>
+
+        <!-- User Table -->
+        <div class="table-responsive shadow-sm">
+            <table class="table table-hover align-middle" id="userTable">
+                <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Chapters</th>
+                    <th>Programs</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.is_admin %}<span class="badge bg-danger">Super Admin</span>{% endif %}
+                            {% if user.is_chapter_admin %}<span class="badge bg-primary">Chapter Admin</span>{% endif %}
+                            {% if user.is_program_admin %}
+                                <span class="badge bg-secondary">Program Admin</span>{% endif %}
+                        </td>
+                        <td>CHAPTERS_PLACEHOLDER</td>
+                        <td>PROGRAMS_PLACEHOLDER</td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Create User Modal -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content shadow">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create New User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" placeholder="Full name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="user@example.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" placeholder="Temporary password">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Role</label>
+                            <select class="form-select">
+                                <option value="user">User</option>
+                                <option value="program_admin">Program Admin</option>
+                                <option value="site_admin">Site Admin</option>
+                                <option value="root">Root</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Assign Chapters</label>
+                            <select id="chapterSelect" name="chapters" class="form-select" multiple>
+                                {% for chapter in chapters %}
+                                    <option value="{{ chapter.id }}">{{ chapter.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Assign Programs</label>
+                            <select id="programSelect" name="programs" class="form-select" multiple>
+                                <!-- Populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Create User</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterUsers() {
+            const nameEmailInput = document.getElementById("inputNameEmail").value.toUpperCase();
+            const selectedRole = document.getElementById("roleFilter").value;
+            const table = document.getElementById("userTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) { // skip header row
+                const tdName = rows[i].getElementsByTagName("td")[0];
+                const tdEmail = rows[i].getElementsByTagName("td")[1];
+                const tdRole = rows[i].getElementsByTagName("td")[2];
+
+                if (!tdName || !tdEmail || !tdRole) continue;
+
+                const name = tdName.textContent || tdName.innerText;
+                const email = tdEmail.textContent || tdEmail.innerText;
+                const role = tdRole.textContent || tdRole.innerText;
+
+                const matchesNameEmail =
+                    name.toUpperCase().includes(nameEmailInput) ||
+                    email.toUpperCase().includes(nameEmailInput);
+
+                const matchesRole = selectedRole === "" || role.includes(selectedRole);
+
+                if (matchesNameEmail && matchesRole) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        const chapterPrograms = {
+            {% for chapter in chapters %}
+                "{{ chapter.id }}": [
+                    {% for program in chapter.programs %}
+                        {
+                            id: {{ program.id }},
+                            name: "{{ program.name }}",
+                            season: "{{ program.season_name | default('') }}"
+                        },
+                    {% endfor %}
+                ],
+            {% endfor %}
+        };
+
+        const chapterSelect = document.getElementById("chapterSelect");
+        const programSelect = document.getElementById("programSelect");
+
+        chapterSelect.addEventListener("change", () => {
+            const selectedChapters = Array.from(chapterSelect.selectedOptions).map(opt => opt.value);
+            const seen = new Set();
+            const matchedPrograms = [];
+
+            selectedChapters.forEach(chapterId => {
+                (chapterPrograms[chapterId] || []).forEach(program => {
+                    if (!seen.has(program.id)) {
+                        seen.add(program.id);
+                        matchedPrograms.push(program);
+                    }
+                });
+            });
+
+            // Clear existing options
+            programSelect.innerHTML = '';
+
+            if (matchedPrograms.length === 0) {
+                const opt = document.createElement('option');
+                opt.disabled = true;
+                opt.textContent = 'No programs available';
+                programSelect.appendChild(opt);
+            } else {
+                matchedPrograms.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.name} – ${p.season}`;
+                    programSelect.appendChild(opt);
+                });
+            }
+        });
+    </script>
+
+
+{% endblock %}
