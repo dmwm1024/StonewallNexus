@@ -23,6 +23,7 @@ class Config:
     Base configuration class used in development by default.
     Extend this class for specific environments.
     """
+    GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL')
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev')
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", 'sqlite:///' + os.path.abspath('stonewallNexus.db'))
     SQLALCHEMY_TRACK_MODIFICATIONS = False

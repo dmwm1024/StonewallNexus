@@ -21,4 +21,4 @@ from flask import Blueprint
 # Blueprint for all admin routes
 admin = Blueprint('admin', __name__, template_folder='templates')
 
-from .routes import dashboard, users, chapters
+from .routes import dashboard, users, chapters, github_hooks
