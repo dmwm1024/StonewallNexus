@@ -71,25 +71,30 @@ def create_user():
 @admin.route('/admin/users/<int:user_id>/edit', methods=['GET', 'POST'])
 def edit_user(user_id):
     user = User.query.get_or_404(user_id)
+
     user_chapter_ids = [role.chapter_id for role in user.chapter_admin_roles]
     user_program_ids = [role.program_id for role in user.program_admin_roles]
     chapters=Chapter.query.filter_by(status="Active").all()
 
 
     if request.method == 'POST':
+        was_super_admin = user.is_super_admin
+        will_be_super_admin = request.form.get('is_super_admin') == 'true'
+
         user.username = request.form.get('username')
         user.email = request.form.get('email')
         user.pronouns = request.form.get('pronouns')
-        user.set_password(request.form.get('password'))
+        new_password = request.form.get('password')
+        if new_password:
+            user.set_password(new_password)
 
-        if 'is_super_admin' in request.form:
-            password = request.form.get('admin_password')
-            if not check_password_hash(current_user.password_hash, password):
-                flash("Password confirmation failed. Cannot grant Super Admin access.", "danger")
+        # Only validate password if changing super admin status
+        if not will_be_super_admin == was_super_admin:
+            admin_password = request.form.get('admin_password')
+            if not admin_password or not current_user.check_password(admin_password):
+                flash("Password confirmation failed. Super Admin access not granted.", "danger")
                 return redirect(url_for('admin.edit_user', user_id=user.id))
-            user.is_super_admin = True
-        else:
-            user.is_super_admin = False
+            user.is_super_admin = will_be_super_admin
 
         db.session.commit()
         flash(f"User {user.username} updated successfully.", "success")

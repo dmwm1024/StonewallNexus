@@ -5,6 +5,7 @@
 **Stonewall Nexus** is a full-featured web application built for managing Stonewall Sports leagues. It streamlines scheduling, venue management, officiating assignments, team registrations, and role-based permissions across multiple chapters, sports, and seasons. Built BY Stonewall members FOR Stonewall members, it's designed to simplify league operations and empower volunteers at every level—from national to chapter-specific management.
 
 - Dev Demo: https://kade.pythonanywhere.com/
+  - Contact Kade for a test account to be created!
 
 **Key Features:**
 - Clean permission based role structures
@@ -53,23 +54,32 @@ pip install -r requirements.txt
 ### 4. Configure Environment Variables
 Create a .env file in the root with the following:
 ```bash
-FLASK_APP=wsgi.py
+# Flask Configuration
+FLASK_APP=run.py
 FLASK_ENV=development
-SECRET_KEY=your-secret-key
-DATABASE_URL=postgresql://user:password@localhost/db_name
 
+# Security 
+# SECRET_KEY= Allow it to use the default.
+
+# Database
+DATABASE_URL=sqlite:///stonewallNexus.db
+
+# Other Configs
+# GITHUB_SECRET = When/If you need this, I'll provide it.
 ```
 
 ### 5. Initialize the Database
 To start fresh, init and migrate your own or use the upgrade command to be in sync with the dev branch.
 ```bash
+flask db init
+flask db migrate -m "Initialization"
 flask db upgrade
 ```
 
 ### 6. (Optional) Load Seed Data
-This will create testing accounts.
+This will create a super admin account.
 ```bash
-python scripts/seed.py
+python scripts/seed_data.py
 ```
 
 ### 7. Run the Development Server

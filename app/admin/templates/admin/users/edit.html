@@ -39,7 +39,7 @@
             <div class="col-md-6">
                 <label class="form-label">Assign Programs</label>
                 <select id="programSelect" name="programs" class="form-select" multiple>
-                    <!-- Populated by JS below -->
+                    <!-- Populated by JS -->
                 </select>
             </div>
 
@@ -116,12 +116,14 @@
     chapterSelect.addEventListener("change", updateProgramOptions);
     window.addEventListener("DOMContentLoaded", updateProgramOptions);
 
-    // Handle Super Admin toggle password field
+    // Show/hide password confirmation if super admin status is being changed
     const toggle = document.getElementById("superAdminToggle");
     const confirmField = document.getElementById("passwordConfirmField");
+    const originallySuperAdmin = {{ 'true' if user.is_super_admin else 'false' }};
 
     function updateConfirmVisibility() {
-        confirmField.style.display = toggle.checked ? "block" : "none";
+        const nowChecked = toggle.checked;
+        confirmField.style.display = (nowChecked !== originallySuperAdmin) ? "block" : "none";
     }
 
     toggle.addEventListener("change", updateConfirmVisibility);
