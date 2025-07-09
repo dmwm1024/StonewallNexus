@@ -14,9 +14,33 @@ Author:
     Kade Kade <your-email@example.com>
 """
 
-from flask import render_template
+from flask import render_template, request
 from app.public import public_bp
 from app.models.chapter import Chapter
+import os
+
+LOGFILE = "/tmp/github_webhook.log"  # you can view this later
+GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
+
+def log(msg):
+    with open(LOGFILE, "a") as f:
+        f.write(msg + "\n")
+
+@public_bp.route('/github-webhook', methods=['POST'])
+def github_webhook():
+    log("🔔 Webhook route hit!")
+
+    # Print headers for visibility
+    log("Headers:")
+    for k, v in request.headers.items():
+        log(f"{k}: {v}")
+
+    # Print body length
+    log(f"Payload size: {len(request.data)} bytes")
+
+    # Just confirm it ran — skip signature for now
+    log("✅ Route completed.")
+    return "Ping", 200
 
 @public_bp.route("/")
 def index():
