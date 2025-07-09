@@ -24,7 +24,7 @@ def log(msg):
     with open(LOGFILE, "a") as f:
         f.write(msg + "\n")
 
-@public_bp.route('/github-webhook', methods=['POST'])
+@public_bp.route('/github-webhook', methods=['POST', 'GET'])
 def github_webhook():
     GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
 
