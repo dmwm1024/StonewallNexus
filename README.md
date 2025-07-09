@@ -99,7 +99,7 @@ git commit -m "Add your descriptive message"
 
 #### 6. Push to your fork and submit a Pull Request 
 
-## Contribution Tips
+## Contribution Tips 
 - Follow PEP8 and naming conventions
 - Organize templates and routes by module
 - Use UTC-aware datetime fields and clean SQLAlchemy models
