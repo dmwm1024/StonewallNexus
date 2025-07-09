@@ -19,15 +19,15 @@ from app.public import public_bp
 from app.models.chapter import Chapter
 import os
 
-LOGFILE = "/tmp/github_webhook.log"  # you can view this later
-GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
-
 def log(msg):
+    LOGFILE = "/tmp/github_webhook.log"  # you can view this later
     with open(LOGFILE, "a") as f:
         f.write(msg + "\n")
 
 @public_bp.route('/github-webhook', methods=['POST'])
 def github_webhook():
+    GITHUB_SECRET = os.environ.get("GITHUB_SECRET", 'FAIL').encode()
+
     log("🔔 Webhook route hit!")
 
     # Print headers for visibility
