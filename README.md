@@ -4,6 +4,8 @@
 
 **Stonewall Nexus** is a full-featured web application built for managing Stonewall Sports leagues. It streamlines scheduling, venue management, officiating assignments, team registrations, and role-based permissions across multiple chapters, sports, and seasons. Built BY Stonewall members FOR Stonewall members, it's designed to simplify league operations and empower volunteers at every level—from national to chapter-specific management.
 
+- Dev Demo: https://kade.pythonanywhere.com/
+
 **Key Features:**
 - Clean permission based role structures
 - Management of sports, seasons, teams, venues, officials, and schedules
