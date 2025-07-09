@@ -10,6 +10,9 @@ from dotenv import load_dotenv; load_dotenv()
 def seed_data():
     app = create_app()
     with app.app_context():
+        print(app.config['SQLALCHEMY_DATABASE_URI'])
+        print(app.config['FLASK_ENV'])
+
         db.create_all()
 
         if not User.query.filter_by(email='admin@admin.com').first():
