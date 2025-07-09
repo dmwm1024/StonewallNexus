@@ -1,0 +1,79 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">User Permissions</h2>
+
+    <!-- Search/Filter -->
+    <form class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Search by name or email...">
+        </div>
+        <div class="col-md-3">
+            <select class="form-select">
+                <option selected>Filter by Role</option>
+                <option>Admin</option>
+                <option>Chapter Admin</option>
+                <option>Program Admin</option>
+                <option>User</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">Search</button>
+        </div>
+        <div class="col-md-3 text-end">
+            <a href="#" class="btn btn-success w-100">+ Add User Access</a>
+        </div>
+    </form>
+
+    <!-- Permissions Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Chapters</th>
+                    <th>Programs</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kade Kade</td>
+                    <td>kade@example.com</td>
+                    <td><span class="badge bg-primary">Admin</span></td>
+                    <td>All</td>
+                    <td>All</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-outline-danger">Revoke</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jessie Garcia</td>
+                    <td>jessie@example.com</td>
+                    <td><span class="badge bg-secondary">Chapter Admin</span></td>
+                    <td>Jacksonville</td>
+                    <td>Kickball, Volleyball</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-outline-danger">Revoke</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alex Rivera</td>
+                    <td>alex@example.com</td>
+                    <td><span class="badge bg-info text-dark">Program Admin</span></td>
+                    <td>Orlando</td>
+                    <td>Dodgeball</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-outline-danger">Revoke</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

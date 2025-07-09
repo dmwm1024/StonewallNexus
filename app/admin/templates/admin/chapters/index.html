@@ -47,7 +47,7 @@
                 <tbody>
                 {% for chapter in chapters %}
                     <tr>
-                        <td><a href="{{ url_for('admin.dashboard', chapter_id=chapter.id) }}">{{ chapter.name }}</a>
+                        <td><a href="{{ url_for('chapter_admin.dashboard', chapter_id=chapter.id) }}">{{ chapter.name }}</a>
                         </td>
                         <td>{{ chapter.city }}</td>
                         <td>{{ chapter.state }}</td>

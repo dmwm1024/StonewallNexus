@@ -1,0 +1,26 @@
+{% extends "chapter_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2>{{ action }} Program</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Program Name</label>
+            <input type="text" class="form-control" id="name" name="name" required
+                   value="{{ program.name }}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description (optional)</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{ program.description }}</textarea>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('chapter_admin.dashboard', chapter=chapter) }}" class="btn btn-secondary">Cancel</a>
+            <div>
+                <button type="submit" class="btn btn-primary me-2">{{ action }} Program</button>
+                <form method="POST" action="{{ url_for('chapter_admin.delete_program', chapter_id=chapter.id, program_id=program.id) }}" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this program?')">Delete</button>
+                </form>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

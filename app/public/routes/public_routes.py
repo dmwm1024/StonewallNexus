@@ -15,10 +15,10 @@ Author:
 """
 
 from flask import render_template
-from app.public import public_bp
+from app.public import public
 from app.models.chapter import Chapter
 
-@public_bp.route("/")
+@public.route("/")
 def index():
     """
     Render the homepage of the site.
@@ -29,7 +29,7 @@ def index():
 
     return render_template('/index.html')
 
-@public_bp.route('/chapter-selector')
+@public.route('/chapter-selector')
 def chapter_selector():
     """
     Display a list of all chapters for the user to choose from.
@@ -41,7 +41,7 @@ def chapter_selector():
     chapters = Chapter.query.all()
     return render_template('public/chapter_selector.html', chapters=chapters)
 
-@public_bp.route('/chapter/<int:site_id>')
+@public.route('/chapter/<int:chapter_id>')
 def chapter_page(chapter_id):
     """
     Render the public-facing page for a single chapter.

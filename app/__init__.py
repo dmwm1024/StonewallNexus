@@ -50,10 +50,16 @@ def create_app():
     from app.auth import auth_bp
     app.register_blueprint(auth_bp)
 
-    from app.public import public_bp
-    app.register_blueprint(public_bp)
+    from app.public import public
+    app.register_blueprint(public)
 
     from app.admin import admin
     app.register_blueprint(admin)
+
+    from app.chapter_admin import chapter_admin
+    app.register_blueprint(chapter_admin)
+
+    from app.program_admin import program_admin
+    app.register_blueprint(program_admin)
 
     return app

@@ -17,6 +17,6 @@ Author:
 from flask import Blueprint
 
 # Import routes to associate them with the blueprint
-public_bp = Blueprint('public', __name__, template_folder='templates')
+public = Blueprint('public', __name__, template_folder='templates')
 
 from .routes import public_routes

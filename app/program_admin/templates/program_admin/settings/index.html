@@ -1,0 +1,37 @@
+{% extends "program_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Program Settings – Kickball</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            General Settings
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Program Name</label>
+                    <input type="text" class="form-control" value="Kickball">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Program Description</label>
+                    <textarea class="form-control" rows="3">Social co-ed kickball league with weekly matches and playoffs.</textarea>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="programActive" checked>
+                    <label class="form-check-label" for="programActive">Program is Active</label>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="programPublic" checked>
+                    <label class="form-check-label" for="programPublic">Visible to Public</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Default Season Length (weeks)</label>
+                    <input type="number" class="form-control" value="10">
+                </div>
+                <button class="btn btn-primary">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

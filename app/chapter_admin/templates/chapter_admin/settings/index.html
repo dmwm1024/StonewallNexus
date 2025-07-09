@@ -1,0 +1,61 @@
+{% extends "chapter_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Chapter Settings</h2>
+
+    <!-- Chapter Branding -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            Branding & Identity
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Chapter Name</label>
+                    <input type="text" class="form-control" value="Stonewall Jacksonville">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">City</label>
+                    <input type="text" class="form-control" value="Jacksonville">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Chapter Logo</label>
+                    <input type="file" class="form-control">
+                    <div class="mt-2">
+                        <img src="https://via.placeholder.com/120x60?text=Logo" alt="Current Logo" class="img-thumbnail">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Primary Theme Color</label>
+                    <input type="color" class="form-control form-control-color" value="#008080">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Branding</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Visibility and Public Options -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            Public Settings
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="chapterActive" checked>
+                    <label class="form-check-label" for="chapterActive">Chapter is Active</label>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="chapterVisible" checked>
+                    <label class="form-check-label" for="chapterVisible">Visible on Public Site</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Public Contact Email</label>
+                    <input type="email" class="form-control" value="jax@stonewallsports.org">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Visibility Settings</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

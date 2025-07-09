@@ -1,0 +1,59 @@
+{% extends "program_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Officials – Kickball Program</h2>
+
+    <form class="row g-3 mb-4">
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Search by name or email...">
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary w-100">Search</button>
+        </div>
+        <div class="col-md-3 text-end">
+            <a href="#" class="btn btn-success w-100">+ Assign New Official</a>
+        </div>
+    </form>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            Assigned Officials
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Assignment Type</th>
+                        <th>Seasons</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kade Kade</td>
+                        <td>kade@example.com</td>
+                        <td>Head Official</td>
+                        <td>Summer 2025</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger">Remove</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Alex Rivera</td>
+                        <td>alex@example.com</td>
+                        <td>Referee</td>
+                        <td>Summer 2025, Fall 2024</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger">Remove</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

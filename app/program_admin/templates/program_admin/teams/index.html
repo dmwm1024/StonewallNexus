@@ -1,0 +1,60 @@
+{% extends "program_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Teams – Summer 2025</h2>
+
+    <!-- Top bar -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <select class="form-select">
+                <option>Summer 2025</option>
+                <option>Fall 2024</option>
+                <option>Spring 2024</option>
+            </select>
+        </div>
+        <a href="#" class="btn btn-success">+ Add Team</a>
+    </div>
+
+    <!-- Team Grid -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">🧨 The Ball Busters</h5>
+                    <p class="card-text">Captain: Jessie Garcia<br>Players: 12</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">💀 Kicks Out for Harambe</h5>
+                    <p class="card-text">Captain: Alex Rivera<br>Players: 10</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-light shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">🔥 Pitch, Please</h5>
+                    <p class="card-text">Captain: Morgan Lane<br>Players: 14</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

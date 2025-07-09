@@ -1,0 +1,21 @@
+{% extends "chapter_admin_base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2>{{ action }} Program</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Program Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Kickball" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description (optional)</label>
+            <textarea class="form-control" id="description" name="description" rows="3"
+                      placeholder="Brief description of the program..."></textarea>
+        </div>
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('chapter_admin.dashboard', chapter_id=chapter.id) }}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success">{{ action }} Program</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

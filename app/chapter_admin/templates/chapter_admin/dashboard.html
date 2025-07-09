@@ -1,0 +1,87 @@
+{% extends "chapter_admin_base.html" %}
+{% block content %}
+    <div class="container my-4">
+        <h2 class="mb-4">Chapter Admin Dashboard</h2>
+
+        <!-- Quick Actions -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                Quick Actions
+            </div>
+            <div class="card-body d-flex flex-wrap gap-3">
+                <a href="{{ url_for('chapter_admin.create_program', chapter_id=chapter.id) }}" class="btn btn-success">Create
+                    New Program</a>
+                <a href="#" class="btn btn-warning">Edit Chapter Settings</a>
+                <a href="#" class="btn btn-info text-white">Email All Captains</a>
+            </div>
+        </div>
+
+        <!-- Programs -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                Programs in This Chapter
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    {% for program in programs %}
+                        <div class="col-md-4">
+                            <div class="card border-light h-100 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ program.name }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {% if program.active_season %}
+                                            Active Season(s): {{ program.active_season.name }}
+                                        {% else %}
+                                            <em>No active season</em>
+                                        {% endif %}
+                                        <br>
+                                        Teams: {{ program.teams|length if program.teams else 0 }}<br>
+                                        Players: {{ program.player_count or 0 }}
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ url_for('program_admin.dashboard', program_id=program.id) }}" class="btn btn-sm btn-outline-primary">View Program</a>
+                                        <a href="{{ url_for('chapter_admin.edit_program', chapter_id=chapter.id, program_id=program.id) }}"
+                                           class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                No programs found for this chapter yet.
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Admins & Program Leaders -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                Chapter Admins & Program Leaders
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Kade Kade <span class="badge bg-primary">Chapter Admin</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Jessie Garcia <span class="badge bg-secondary">Program Leader – Kickball</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Alex Rivera <span class="badge bg-secondary">Program Leader – Volleyball</span>
+                    </li>
+                </ul>
+                <div class="text-end mt-3">
+                    <a href="#" class="btn btn-outline-secondary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,32 +1,32 @@
-{% extends "base.html" %}
-{% block title %}Find Your League Site{% endblock %}
+{% extends "public_base.html" %}
+{% block title %}Find Your Chapter{% endblock %}
 
 {% block content %}
 <div class="text-center mb-4">
-    <h1 class="display-5">Find Your League</h1>
-    <p class="lead">Start by selecting your city or site below.</p>
+    <h1 class="display-5">Find Your Chapter</h1>
+    <p class="lead">Start by selecting your city or chapter name below.</p>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <input type="text" id="site-search" class="form-control mb-3" placeholder="Search by city or site name...">
+        <input type="text" id="site-search" class="form-control mb-3" placeholder="Search by city or chapter name...">
     </div>
 </div>
 
 <div class="row" id="site-list">
-    {% for site in sites %}
+    {% for chapter in chapters %}
     <div class="col-md-4 site-card mb-4">
         <div class="card h-100 shadow-sm">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">{{ site.name }}</h5>
-                <p class="card-text text-muted">{{ site.city }}, {{ site.state }}</p>
-                <a href="{{ url_for('public.site_page', site_id=site.id) }}" class="btn btn-primary mt-auto">Visit Site</a>
+                <h5 class="card-title">{{ chapter.name }}</h5>
+                <p class="card-text text-muted">{{ chapter.city }}, {{ chapter.state }}</p>
+                <a href="{{ url_for('public.chapter_page', chapter_id=chapter.id) }}" class="btn btn-primary mt-auto">Visit Chapter</a>
             </div>
         </div>
     </div>
     {% else %}
     <div class="col-12 text-center">
-        <p>No sites found.</p>
+        <p>No Chapters found.</p>
     </div>
     {% endfor %}
 </div>
