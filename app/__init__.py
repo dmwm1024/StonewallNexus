@@ -42,6 +42,10 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    # Register GitHub webhook routes
+    from app.github import github_bp
+    app.register_blueprint(github_bp)
+
     # Register blueprints and routes
     from app.auth import auth_bp
     app.register_blueprint(auth_bp)
