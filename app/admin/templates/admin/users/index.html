@@ -79,32 +79,23 @@
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content shadow">
-                <form>
+                <form method="POST" action="{{ url_for('admin.create_user') }}">
                     <div class="modal-header">
                         <h5 class="modal-title">Create New User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" placeholder="Full name">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="Full name">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="user@example.com">
+                            <input type="email" class="form-control" name="email" placeholder="user@example.com">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-control" placeholder="Temporary password">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Role</label>
-                            <select class="form-select">
-                                <option value="user">User</option>
-                                <option value="program_admin">Program Admin</option>
-                                <option value="site_admin">Site Admin</option>
-                                <option value="root">Root</option>
-                            </select>
+                            <label class="form-label">Pronouns</label>
+                            <input type="text" name="pronouns" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Assign Chapters</label>
@@ -120,6 +111,11 @@
                             <select id="programSelect" name="programs" class="form-select" multiple>
                                 <!-- Populated by JavaScript -->
                             </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password"
+                                   placeholder="Temporary password">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Create User</button>

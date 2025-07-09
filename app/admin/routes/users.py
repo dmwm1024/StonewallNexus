@@ -17,6 +17,8 @@ from app.admin import admin
 from app.models.user import User
 from app.models.chapter import Chapter
 from app.extensions import db
+from flask_login import current_user
+from werkzeug.security import check_password_hash
 
 @admin.route('/admin/users')
 def list_users():
@@ -32,7 +34,7 @@ def list_users():
 
     return render_template("/admin/users/index.html", users=users, chapters=chapters)
 
-@admin.route('/admin/users/create')
+@admin.route('/admin/users/create', methods=['GET', 'POST'])
 def create_user():
     """
     Handle the creation of a new user.
@@ -68,23 +70,6 @@ def create_user():
 
 @admin.route('/admin/users/<int:user_id>/edit', methods=['GET', 'POST'])
 def edit_user(user_id):
-    """
-    Display and handle form submission for editing an existing user.
-
-    Args:
-        user_id (int): ID of the user to edit.
-
-    GET:
-        Renders the edit form pre-filled with user info and assigned roles.
-
-    POST:
-        Updates user attributes (`username`, `email`, `pronouns`, `password`)
-        and commits the changes.
-
-    Returns:
-        Rendered form or redirect with a flash message.
-    """
-
     user = User.query.get_or_404(user_id)
     user_chapter_ids = [role.chapter_id for role in user.chapter_admin_roles]
     user_program_ids = [role.program_id for role in user.program_admin_roles]
@@ -96,6 +81,15 @@ def edit_user(user_id):
         user.email = request.form.get('email')
         user.pronouns = request.form.get('pronouns')
         user.set_password(request.form.get('password'))
+
+        if 'is_super_admin' in request.form:
+            password = request.form.get('admin_password')
+            if not check_password_hash(current_user.password_hash, password):
+                flash("Password confirmation failed. Cannot grant Super Admin access.", "danger")
+                return redirect(url_for('admin.edit_user', user_id=user.id))
+            user.is_super_admin = True
+        else:
+            user.is_super_admin = False
 
         db.session.commit()
         flash(f"User {user.username} updated successfully.", "success")

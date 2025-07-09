@@ -49,6 +49,7 @@ class User(db.Model, UserMixin, AuditMixin):
 
         return check_password_hash(self.password_hash, password)
 
+    @property
     def is_admin(self):
         """
         Check if the user is a super admin.

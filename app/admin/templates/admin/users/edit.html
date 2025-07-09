@@ -7,7 +7,7 @@
         <div class="row g-3">
             <div class="col-md-6">
                 <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" value="{{ user.username }}">
+                <input type="text" name="username" class="form-control" value="{{ user.username }}">
             </div>
             <div class="col-md-6">
                 <label class="form-label">Email</label>
@@ -16,17 +16,13 @@
 
             <div class="col-md-6">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Leave blank to keep current password">
+                <input type="password" name="password" class="form-control"
+                       placeholder="Leave blank to keep current password">
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">Role</label>
-                <select name="role" class="form-select">
-                    <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
-                    <option value="program_admin" {% if user.role == 'program_admin' %}selected{% endif %}>Program Admin</option>
-                    <option value="site_admin" {% if user.role == 'site_admin' %}selected{% endif %}>Site Admin</option>
-                    <option value="root" {% if user.role == 'root' %}selected{% endif %}>Root</option>
-                </select>
+                <label class="form-label">Pronouns</label>
+                <input type="text" name="pronouns" class="form-control" value="{{ user.pronouns }}">
             </div>
 
             <div class="col-md-6">
@@ -45,6 +41,22 @@
                 <select id="programSelect" name="programs" class="form-select" multiple>
                     <!-- Populated by JS below -->
                 </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label d-block">Grant Super Admin Access</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="superAdminToggle" name="is_super_admin"
+                           value="true" {% if user.is_super_admin %}checked{% endif %}>
+                    <label class="form-check-label" for="superAdminToggle">
+                        {{ "Enabled" if user.is_super_admin else "Disabled" }}
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-6" id="passwordConfirmField" style="display: none;">
+                <label class="form-label">Confirm Your Password</label>
+                <input type="password" class="form-control" name="admin_password" placeholder="Enter your password">
             </div>
         </div>
 
@@ -102,8 +114,17 @@
     }
 
     chapterSelect.addEventListener("change", updateProgramOptions);
-
-    // Trigger update on page load
     window.addEventListener("DOMContentLoaded", updateProgramOptions);
+
+    // Handle Super Admin toggle password field
+    const toggle = document.getElementById("superAdminToggle");
+    const confirmField = document.getElementById("passwordConfirmField");
+
+    function updateConfirmVisibility() {
+        confirmField.style.display = toggle.checked ? "block" : "none";
+    }
+
+    toggle.addEventListener("change", updateConfirmVisibility);
+    window.addEventListener("DOMContentLoaded", updateConfirmVisibility);
 </script>
 {% endblock %}
